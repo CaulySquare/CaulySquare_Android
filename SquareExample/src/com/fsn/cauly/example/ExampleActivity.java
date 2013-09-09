@@ -21,7 +21,7 @@ import com.fsn.cauly.Logger.LogLevel;
 
 public class ExampleActivity extends Activity implements CaulySquareListener, OnClickListener {
 
-	String APP_CODE="SQUARE_TEST_3";
+	String APP_CODE="";  // your app code which you are assigned.
     Button show_offerwall, request_offerlist, show_offerdetail,request_adwall_status;
     Button actioncompleted, execcompleted;
     CaulySquare mCaulySquare;
@@ -48,16 +48,16 @@ public class ExampleActivity extends Activity implements CaulySquareListener, On
         show_offerwall.setEnabled(false);
         show_offerdetail.setEnabled(false);
         
-        // Cauly 로그 수준 지정 : 로그의 상세함 순서는 다음과 같다.
+        // Cauly log level setting.
         //	LogLevel.Info > LogLevel.Warn > LogLevel.Error > LogLevel.None
         Logger.setLogLevel(LogLevel.None);
        
-        // CaulyAdInfo 생성 : CaulyAdInfoBuilder 사용. APP_CODE 
+        // CaulyAdInfo creation : CaulyAdInfoBuilder with APP_CODE 
 		CaulyAdInfo adInfo1 = new CaulyAdInfoBuilder(APP_CODE).build();
 		
 		 // CaulySquare Initiation 
 		mCaulySquare = CaulySquare.initWithAdInfo(this, adInfo1);
-		// kakaoid나 게임에서 쓰는 id를 전달합니다. ( optional ) 
+		// kakaoid or user unique key in Game. ( optional ) 
 		mCaulySquare.setCustomId( "kakaoid_of_the_game" );
 		// callback listener register.
 		mCaulySquare.setListener(this);
@@ -65,30 +65,30 @@ public class ExampleActivity extends Activity implements CaulySquareListener, On
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.request_adwall_status:
+		case R.id.request_adwall_status: 
 			mCaulySquare.requestOfferStatus(this);  
 			break;
-		case R.id.show_adwall:
-			mCaulySquare.showOfferwall(this, "타이틀 입니다.");
+		case R.id.show_adwall:					// show adwall page. calls back "onOpenOfferwall","onCloseOfferwall"  on CaulySquareListener
+			mCaulySquare.showOfferwall(this, "Your own title");
 			break;
-		case R.id.request_ad_data:
-			mCaulySquare.requestOfferList(this);
+		case R.id.request_ad_data: 				 // In case that you want to make your own design offer wall, you can get offer list 
+			mCaulySquare.requestOfferList(this); // calls back "onOfferListReceived" on CaulySquareListener
 			break;
-		case R.id.show_ad_detail:
+		case R.id.show_ad_detail:				 // Once you succeed to get offer list, you can call this for showing detail info dialog which leads to specific ad action
 			if(mOfferList.size()>0)
 				mCaulySquare.showOfferDetailDialog(this, mOfferList.get(0));
 			break;
 		case R.id.send_exec:
-			mCaulySquare.reportAction(this, CaulySquareActionType.EXECUTION_COMPLETE, "실행 완료");
+			mCaulySquare.reportAction(this, CaulySquareActionType.EXECUTION_COMPLETE, "Exec Completed");
 			break;
 		case R.id.send_action:
-			mCaulySquare.reportAction(this, CaulySquareActionType.ACTION_COMPLETE, "액션 완료");
+			mCaulySquare.reportAction(this, CaulySquareActionType.ACTION_COMPLETE, "Action Completed");
 			break;
 		}
 		
 	}
 	//////////////////////////////
-	// CaulySquareState Function 호출
+	// CaulySquareState Function 
 	//////////////////////////////
 	
 	@Override
@@ -116,7 +116,7 @@ public class ExampleActivity extends Activity implements CaulySquareListener, On
 	}
 	
 	//////////////////////////////
-	// CaulySquare 광고 Listener
+	// CaulySquare Callback Listener
 	//////////////////////////////
 	
 	@Override
@@ -162,7 +162,7 @@ public class ExampleActivity extends Activity implements CaulySquareListener, On
 	}
 
 	@Override
-	// This is called when Offer Detail Dialogue shows.
+	// This is called when Offer Detail Dialog shows.
 	public void onOpenOfferDetails() {
 		
 	}
