@@ -19,14 +19,17 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".ExampleActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation" >	<!-- orientation 변경 시 Activity 재시작 방지 -->
+            android:name=".PublisherActivity" android:theme="@android:style/Theme.NoTitleBar" 
+            android:configChanges="keyboard|keyboardHidden|orientation" >	
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
+         <activity
+            android:name=".AdvertiserActivity"  android:theme="@android:style/Theme.NoTitleBar" 
+            android:configChanges="keyboard|keyboardHidden|orientation" >	
+        </activity>
     </application>
 
 </manifest>
