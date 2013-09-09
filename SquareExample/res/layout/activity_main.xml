@@ -6,38 +6,23 @@
     android:background="#FFFFFF"
     android:orientation="vertical" >
 
-    <LinearLayout
+	<Button
+	     android:layout_marginTop="50dp"
+        android:id="@+id/request_adwall_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp" >
-
-        <EditText
-            android:id="@+id/appcode_gi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:hint="App Code" />
-
-        <EditText
-            android:id="@+id/cust_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="20dp"
-            android:hint="Custom Id" />
-    </LinearLayout>
-
+        android:text="request Adwall Status" />
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/show_adwall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+         android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
         android:text="show Adwall" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/request_ad_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -45,7 +30,7 @@
         android:text="request Adwall Data" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/show_ad_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -59,45 +44,26 @@
         android:layout_marginTop="20dp"
         android:text="---- For Advertiser actions ----" />
 
+
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:layout_marginTop="10dp"
-        android:layout_gravity="center_horizontal" >
-
-           <EditText
-            android:id="@+id/appcode_ga"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:hint="App Code" />
-
-        <EditText
-            android:id="@+id/cust_id2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="20dp"
-            android:hint="Custom Id" />
-
-    </LinearLayout>
-
-    <LinearLayout  android:layout_width="wrap_content" android:layout_marginTop="10dp"
-            android:layout_height="wrap_content" android:layout_gravity="center_horizontal" >
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp" >
 
         <Button
-            android:id="@+id/button6"
+            android:id="@+id/send_exec"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onExec"
             android:text="Send Exec" />
 
         <Button
-            android:id="@+id/button7"
+            android:id="@+id/send_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onAction"
             android:text="Send Action" />
     </LinearLayout>
-
 
 </LinearLayout>
