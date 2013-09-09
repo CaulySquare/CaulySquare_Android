@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical" >
+
+    
+     <Button
+        android:id="@+id/go_pub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:layout_marginTop="10dp"
+          android:textSize="20dp"
+        android:layout_gravity="center_horizontal"
+        android:text="Go Publisher Side Action" />
+    
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp"
+        android:textSize="20dp"
+        android:text="---- For Advertiser actions ----" />
+    
+    <Button
+        android:id="@+id/show_adwall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:layout_marginTop="80dp"
+        android:layout_gravity="center_horizontal"
+        android:text="show Adwall" />
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp" >
+
+        <Button
+            android:id="@+id/send_exec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onExec"
+            android:text="Send Exec" />
+
+        <Button
+            android:id="@+id/send_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onAction"
+            android:text="Send Action" />
+    </LinearLayout>
+
+</LinearLayout>
