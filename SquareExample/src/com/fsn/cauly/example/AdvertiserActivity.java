@@ -1,22 +1,17 @@
 package com.fsn.cauly.example;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.fsn.cauly.CaulyAdInfo;
 import com.fsn.cauly.CaulyAdInfoBuilder;
 import com.fsn.cauly.CaulySquare;
 import com.fsn.cauly.CaulySquare.CaulySquareActionType;
-import com.fsn.cauly.CaulySquareAd;
-import com.fsn.cauly.CaulySquareListener;
 
-public class AdvertiserActivity extends Activity implements CaulySquareListener {
+public class AdvertiserActivity extends Activity {
 
 	String APP_CODE="";  // your app code which you are assigned.
     Button show_offerwall;
@@ -54,12 +49,8 @@ public class AdvertiserActivity extends Activity implements CaulySquareListener 
 		
 		 // CaulySquare Initiation 
 		mCaulySquare = CaulySquare.initWithAdInfo(this, adInfo1);
-		
 		// kakaoid or user unique key in Game. ( optional ) 
 		mCaulySquare.setCustomId( "kakaoid_of_the_game" );
-		
-		// callback listener register.
-		mCaulySquare.setListener(this);
 	}
 	
 	
@@ -92,86 +83,4 @@ public class AdvertiserActivity extends Activity implements CaulySquareListener 
 		   // ACTION_COMPLETE : 액션 완료
 	}
 	
-	
-	//////////////////////////////
-	// CaulySquareState Function  
-	//////////////////////////////
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		mCaulySquare.onPause();
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		mCaulySquare.onResume();
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
-		mCaulySquare.onStart();
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		mCaulySquare.onStop();
-	}
-	
-	//////////////////////////////
-	// CaulySquare Callback Listener
-	//////////////////////////////
-	
-	@Override
-	// This is called when Offer Detail Dialogue closed.
-	public void onCloseOfferDetails(int arg0, String arg1) {
-		
-	}
-
-	@Override
-	// This is called when offerWall closed.
-	public void onCloseOfferwall(int retCode, String retMsg) {
-		
-	}
-
-	@Override
-	// This is called when offer list received. 
-	// CaulySquareAd contains offer Ad information.
-	public void onOfferListReceived(int retCode, String retMsg,	ArrayList<CaulySquareAd> arg2) {
-		if(retCode > 0 )  // success
-		{
-		}
-		else			// failed
-		{
-			Toast.makeText(this, ""+retMsg, Toast.LENGTH_SHORT).show();
-		}
-	}
-
-	@Override
-	// This is called when offer status received. 
-	// It tells us whether offerwall is available or not;
-	public void onOfferStatusReceived(int retCode, String retMsg) {
-		if(retCode >= 0) // offers is available. 
-		{
-		}
-		else			// offers is not available at this moment for some reason. 
-		{
-			Toast.makeText(this, ""+retMsg, Toast.LENGTH_SHORT).show();
-		}
-	}
-
-	@Override
-	// This is called when Offer Detail Dialog shows.
-	public void onOpenOfferDetails() {
-		
-	}
-
-	@Override
-	// This is called when offerwall shows.
-	public void onOpenOfferwall() {
-		
-	}
 }
