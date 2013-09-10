@@ -175,7 +175,7 @@ public class PublisherActivity extends Activity implements CaulySquareListener, 
 	// This is called when offer status received. 
 	// It tells us whether offerwall is available or not;
 	public void onOfferStatusReceived(int retCode, String retMsg) {
-		if(retCode >= 0) // offers is available. 
+		if(retCode > 0) // offers is available. 
 		{
 			show_offerwall.setEnabled(true);
 		}
