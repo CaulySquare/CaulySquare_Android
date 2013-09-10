@@ -29,15 +29,21 @@ public class AdvertiserActivity extends Activity {
 			}
 		});
         show_offerwall = (Button) findViewById(R.id.show_adwall);
-        actioncompleted = (Button) findViewById(R.id.send_exec);
-        execcompleted = (Button) findViewById(R.id.send_action);
+        execcompleted = (Button) findViewById(R.id.send_exec);
+        actioncompleted = (Button) findViewById(R.id.send_action);
         
         /////////////////////////////////////////////////////////////////////
         // Cauly Square Initiation  
         // You must call this function 
         initCaulySquare();
         
+        // click event register and request each action. 
+        
         requestOfferWallScreen();
+        
+        giveRewardtoUserWhenAction();
+        
+        giveRewardtoUserWhenExecution();
         
     }
 	
@@ -69,7 +75,13 @@ public class AdvertiserActivity extends Activity {
 	
 	// Advertiser Side  
 	void giveRewardtoUserWhenExecution( ) {
-		mCaulySquare.reportAction(this, CaulySquareActionType.EXECUTION_COMPLETE, "exec completed");
+		execcompleted.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mCaulySquare.reportAction(AdvertiserActivity.this, CaulySquareActionType.EXECUTION_COMPLETE, "exec completed");
+			}
+		});
+		
 		   // EXECUTION_COMPLETE : 실행 완료
 		   // ACTION_COMPLETE : 액션 완료
 	}
@@ -78,7 +90,12 @@ public class AdvertiserActivity extends Activity {
 
 	// Advertiser Side  
 	void giveRewardtoUserWhenAction( ) {
-		mCaulySquare.reportAction(this, CaulySquareActionType.ACTION_COMPLETE, "action completed");
+		actioncompleted.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mCaulySquare.reportAction(AdvertiserActivity.this, CaulySquareActionType.ACTION_COMPLETE, "action completed");
+			}
+		});
 		   // EXECUTION_COMPLETE : 실행 완료
 		   // ACTION_COMPLETE : 액션 완료
 	}
