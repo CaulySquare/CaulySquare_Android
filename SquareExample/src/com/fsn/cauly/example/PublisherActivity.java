@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -14,12 +15,14 @@ import com.fsn.cauly.CaulyAdInfo;
 import com.fsn.cauly.CaulyAdInfoBuilder;
 import com.fsn.cauly.CaulySquare;
 import com.fsn.cauly.CaulySquareAd;
+import com.fsn.cauly.CaulySquareDisplayAd;
+import com.fsn.cauly.CaulySquareDisplayAdListener;
 import com.fsn.cauly.CaulySquareListener;
 
-public class PublisherActivity extends Activity implements CaulySquareListener, OnClickListener {
+public class PublisherActivity extends Activity implements CaulySquareListener, OnClickListener, CaulySquareDisplayAdListener {
 
-	String APP_CODE="";  // your app code which you are assigned.
-    Button show_offerwall, request_offerlist, show_offerdetail,request_adwall_status;
+	String APP_CODE="AthXnPnM";  // your app code which you are assigned.
+    Button show_offerwall, request_offerlist, show_offerdetail,request_adwall_status,show_display;
     CaulySquare mCaulySquare;
     ArrayList<CaulySquareAd> mOfferList;
     
@@ -37,10 +40,12 @@ public class PublisherActivity extends Activity implements CaulySquareListener, 
         show_offerwall = (Button) findViewById(R.id.show_adwall);
         request_offerlist = (Button) findViewById(R.id.request_ad_data);
         show_offerdetail = (Button) findViewById(R.id.show_ad_detail);
+        show_display = (Button) findViewById(R.id.show_display);
         request_adwall_status.setOnClickListener(this);
         show_offerwall.setOnClickListener(this);
         request_offerlist.setOnClickListener(this);
         show_offerdetail.setOnClickListener(this);
+        show_display.setOnClickListener(this);
         show_offerwall.setEnabled(false);
         show_offerdetail.setEnabled(false);
         
@@ -64,9 +69,13 @@ public class PublisherActivity extends Activity implements CaulySquareListener, 
 		case R.id.show_ad_detail:				
 			show_AdDetail();
 			break;
+		case R.id.show_display:
+			show_DispayAd();
+			break;
 		}
 	}
 	
+
 	// CaulySquare Initiation  
 	void initCaulySquare()
 	{
@@ -108,6 +117,18 @@ public class PublisherActivity extends Activity implements CaulySquareListener, 
 			mCaulySquare.showOfferDetailDialog(this, mOfferList.get(0));
 	}
 	
+	
+	// CaulySquareDisplayAd request 
+	// Before you call show() , You must call requestDisplayAd() first. 
+	// You see the result of requestDisplayAd at onReceiveDisplayAd and onFailedToReceiveDisplayAd 
+	//which is implemeneted on CaulySquareDisplayAdListener
+	private void show_DispayAd() {
+		CaulyAdInfo adInfo = new CaulyAdInfoBuilder(APP_CODE).build();
+		CaulySquareDisplayAd displayad = new CaulySquareDisplayAd();
+		displayad.setAdInfo(adInfo);
+		displayad.setDisplayAdListener(this);
+		displayad.requestDisplayAd(this);		
+	}
 	
 	//////////////////////////////
 	// CaulySquareState Function  
@@ -195,5 +216,23 @@ public class PublisherActivity extends Activity implements CaulySquareListener, 
 	// This is called when offerwall shows.
 	public void onOpenOfferwall() {
 		
+	}
+
+	@Override
+	public void onClosedDisplayAd(CaulySquareDisplayAd arg0) {
+		
+	}
+
+	@Override
+	public void onFailedToReceiveDisplayAd(CaulySquareDisplayAd arg0, int arg1,	String arg2) {
+		Log.i("CaulySample","onFailedToReceiveDisplayAd "+arg1+"  "+arg2 );
+	}
+
+	
+	// DisplayAd is ready for showing 
+	// 
+	@Override
+	public void onReceiveDisplayAd(CaulySquareDisplayAd ad, boolean arg1) {
+		ad.show();
 	}
 }

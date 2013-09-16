@@ -35,7 +35,13 @@
          android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
         android:text="show Adwall" />
-
+ <Button
+        android:id="@+id/show_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:text="show Diplay" />
     <Button
         android:id="@+id/request_ad_data"
         android:layout_width="wrap_content"
