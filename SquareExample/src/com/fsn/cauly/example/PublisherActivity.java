@@ -21,7 +21,7 @@ import com.fsn.cauly.CaulySquareListener;
 
 public class PublisherActivity extends Activity implements CaulySquareListener, OnClickListener, CaulySquareDisplayAdListener {
 
-	String APP_CODE="";  // your app code which you are assigned.
+	String APP_CODE="squaretest1";  // your app code which you are assigned.
     Button show_offerwall, request_offerlist, show_offerdetail,request_adwall_status,show_display;
     CaulySquare mCaulySquare;
     ArrayList<CaulySquareAd> mOfferList;
