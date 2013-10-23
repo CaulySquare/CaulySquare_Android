@@ -86,7 +86,7 @@ public class PublisherActivity extends Activity implements CaulySquareListener, 
 		mCaulySquare = CaulySquare.initWithAdInfo(this, adInfo1);
 		
 		// kakaoid or user unique key in Game. ( optional ) 
-		mCaulySquare.setCustomId( "kakaoid_of_the_game" );
+		mCaulySquare.setCustomId( "kakaoid_of_the_game,안녕하세요" );
 		
 		// callback listener register.
 		mCaulySquare.setListener(this);
@@ -121,7 +121,7 @@ public class PublisherActivity extends Activity implements CaulySquareListener, 
 	// CaulySquareDisplayAd request 
 	// Before you call show() , You must call requestDisplayAd() first. 
 	// You see the result of requestDisplayAd at onReceiveDisplayAd and onFailedToReceiveDisplayAd 
-	//which is implemeneted on CaulySquareDisplayAdListener
+	//which is implemented on CaulySquareDisplayAdListener
 	private void show_DispayAd() {
 		CaulyAdInfo adInfo = new CaulyAdInfoBuilder(APP_CODE).build();
 		CaulySquareDisplayAd displayad = new CaulySquareDisplayAd();
@@ -132,7 +132,7 @@ public class PublisherActivity extends Activity implements CaulySquareListener, 
 	
 	//////////////////////////////
 	// CaulySquareState Function  
-	// You Should call this 4 funtion
+	// You Should call this 4 function
 	// onStart, onResume, onStop, onPause
 	//////////////////////////////
 	
@@ -178,7 +178,20 @@ public class PublisherActivity extends Activity implements CaulySquareListener, 
 
 	@Override
 	// This is called when offer list received. 
-	// CaulySquareAd contains offer Ad information.
+	// CaulySquareAd contains offer Ad information as following.
+	/*
+	 *  public class CaulySquareAd {
+			public String title;  		 // 광고 타이틀
+			public String desc;   		 // 광고 상세 설명
+			public String link;  		 // 랜딩페이지 URL
+			public int ads_cd;			 //광고 고유번호
+			public String img_url; 		 // 광고 Thumbnail URL
+			public int reward;  		 //reward 가격
+			public String point_url;  	 //reward 단위 Thumbnail URL
+			
+			...
+		}
+	 * */
 	public void onOfferListReceived(int retCode, String retMsg,	ArrayList<CaulySquareAd> arg2) {
 		if(retCode > 0 )  // success
 		{
