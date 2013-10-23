@@ -13,8 +13,7 @@ import com.fsn.cauly.CaulySquare.CaulySquareActionType;
 
 public class AdvertiserActivity extends Activity {
 
-	String APP_CODE="";  // your app code which you are assigned.
-    Button show_offerwall;
+	String APP_CODE="gatester";  // your app code which you are assigned.
     Button actioncompleted, execcompleted;
     CaulySquare mCaulySquare;
     
@@ -28,7 +27,6 @@ public class AdvertiserActivity extends Activity {
 				finish();
 			}
 		});
-        show_offerwall = (Button) findViewById(R.id.show_adwall);
         execcompleted = (Button) findViewById(R.id.send_exec);
         actioncompleted = (Button) findViewById(R.id.send_action);
         
@@ -38,8 +36,6 @@ public class AdvertiserActivity extends Activity {
         initCaulySquare();
         
         // click event register and request each action. 
-        
-        requestOfferWallScreen();
         
         giveRewardtoUserWhenAction();
         
@@ -59,18 +55,6 @@ public class AdvertiserActivity extends Activity {
 		mCaulySquare.setCustomId( "kakaoid_of_the_game" );
 	}
 	
-	
-	// show adwall page. it calls back "onOpenOfferwall","onCloseOfferwall"  on CaulySquareListener
-	void requestOfferWallScreen()
-	{
-		show_offerwall.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				mCaulySquare.showOfferwall(AdvertiserActivity.this, "Your own title");
-			}
-		});
-	
-	}
 	
 	
 	// Advertiser Side  
