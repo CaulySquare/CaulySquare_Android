@@ -13,8 +13,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.fsn.cauly.CaulyAdInfo;
 import com.fsn.cauly.CaulyAdInfoBuilder;
@@ -24,23 +22,20 @@ import com.fsn.cauly.CaulySquareDisplayAd;
 import com.fsn.cauly.CaulySquareDisplayAdListener;
 import com.fsn.cauly.CaulySquareListener;
 
-public class PublisherActivity extends Activity implements CaulySquareListener, OnClickListener, CaulySquareDisplayAdListener {
+public class DisplayAdPublisherActivity extends Activity implements CaulySquareListener, OnClickListener, CaulySquareDisplayAdListener {
 
 	String APP_CODE="gatester";  // your app code which you are assigned.
-    Button show_offerwall,request_adwall_status;
+    Button show_display;
     CaulySquare mCaulySquare;
     ArrayList<CaulySquareAd> mOfferList;
     
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_publisher);
+        setContentView(R.layout.activity_publisher2);
         setSpinner();
-        request_adwall_status = (Button) findViewById(R.id.request_adwall_status);
-        show_offerwall = (Button) findViewById(R.id.show_adwall);
-        request_adwall_status.setOnClickListener(this);
-        show_offerwall.setOnClickListener(this);
-        show_offerwall.setEnabled(false);
+        show_display = (Button) findViewById(R.id.show_display);
+        show_display.setOnClickListener(this);
         
         /////////////////////////////////////////////////////////////////////
         // 카울리 스퀘어 초기화 
@@ -56,27 +51,28 @@ public class PublisherActivity extends Activity implements CaulySquareListener, 
 					Intent i;
 	 				switch(pos)
 	 				{
-	 				case 1:
-	 					i = new Intent(PublisherActivity.this,CustomOfferwallPublisherActivity.class);
+	 				case 0:
+	 					i = new Intent(DisplayAdPublisherActivity.this,PublisherActivity.class);
 	 					startActivity(i);
 	 					finish();
 	 					break;
-	 				case 2:
-	 					i = new Intent(PublisherActivity.this,DisplayAdPublisherActivity.class);
+	 				case 1:
+	 					i = new Intent(DisplayAdPublisherActivity.this,CustomOfferwallPublisherActivity.class);
 	 					startActivity(i);
 	 					finish();
 	 					break;
 	 				case 3:
-	 					i = new Intent(PublisherActivity.this,AdvertiserActivity.class);
+	 					i = new Intent(DisplayAdPublisherActivity.this,AdvertiserActivity.class);
 	 					startActivity(i);
 	 					finish();
 	 					break;
 	 				case 4:
-						i = new Intent(PublisherActivity.this,BannerActivity.class);
+						i = new Intent(DisplayAdPublisherActivity.this,BannerActivity.class);
 						startActivity(i);
 						finish();
 						break;
 	 				}
+					
 				}
 
 				@Override
@@ -84,22 +80,19 @@ public class PublisherActivity extends Activity implements CaulySquareListener, 
 					// TODO Auto-generated method stub
 					
 				}
-			
-	 		});
+			});
 	         
 	         String[] items = {"Go OfferWall Ad","Go Custom Offerwal Ad","Go DisplayAd","Go AdVertiser Report","Go Banner Ad"};
 	         ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, items);
 	         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	         go_pub.setAdapter(aa);
+	         go_pub.setSelection(2);
 	    }
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.request_adwall_status: 
-			mCaulySquare.requestOfferStatus(this);  
-			break;
-		case R.id.show_adwall:					
-			showOfferWallScreen();
+		case R.id.show_display:
+			show_DispayAd();
 			break;
 		}
 	}
@@ -121,14 +114,17 @@ public class PublisherActivity extends Activity implements CaulySquareListener, 
 		mCaulySquare.setListener(this);
 	}
 	
-	
-	// show adwall page. it calls back "onOpenOfferwall","onCloseOfferwall"  on CaulySquareListener
-	void showOfferWallScreen()
-	{
-		mCaulySquare.showOfferwall(this, "Your own title");
+	// CaulySquareDisplayAd request 
+	// Before you call show() , You must call requestDisplayAd() first. 
+	// You see the result of requestDisplayAd at onReceiveDisplayAd and onFailedToReceiveDisplayAd 
+	//which is implemented on CaulySquareDisplayAdListener
+	private void show_DispayAd() {
+		CaulyAdInfo adInfo = new CaulyAdInfoBuilder(APP_CODE).build();
+		CaulySquareDisplayAd displayad = new CaulySquareDisplayAd();
+		displayad.setAdInfo(adInfo);
+		displayad.setDisplayAdListener(this);
+		displayad.requestDisplayAd(this);		
 	}
-	
-	
 	
 	//////////////////////////////
 	// CaulySquareState Function  
@@ -165,43 +161,28 @@ public class PublisherActivity extends Activity implements CaulySquareListener, 
 	//////////////////////////////
 	
 	@Override
-	// This is called when Offer Detail Dialogue closed.
 	public void onCloseOfferDetails(int arg0, String arg1) {
 		
 	}
 
 	@Override
-	// This is called when offerWall closed.
 	public void onCloseOfferwall(int retCode, String retMsg) {
 		
 	}
-
 	@Override
 	public void onOfferListReceived(int retCode, String retMsg,	ArrayList<CaulySquareAd> arg2) {
 	}
 
 	@Override
-	// This is called when offer status received. 
-	// It tells us whether offerwall is available or not;
 	public void onOfferStatusReceived(int retCode, String retMsg) {
-		if(retCode > 0) // offers is available. 
-		{
-			show_offerwall.setEnabled(true);
-		}
-		else			// offers is not available at this moment for some reason. 
-		{
-			Toast.makeText(this, ""+retMsg, Toast.LENGTH_SHORT).show();
-		}
 	}
 
 	@Override
-	// This is called when Offer Detail Dialog shows.
 	public void onOpenOfferDetails() {
 		
 	}
 
 	@Override
-	// This is called when offerwall shows.
 	public void onOpenOfferwall() {
 		
 	}
@@ -213,10 +194,14 @@ public class PublisherActivity extends Activity implements CaulySquareListener, 
 
 	@Override
 	public void onFailedToReceiveDisplayAd(CaulySquareDisplayAd arg0, int arg1,	String arg2) {
+		Log.i("CaulySample","onFailedToReceiveDisplayAd "+arg1+"  "+arg2 );
 	}
 
 	
+	// DisplayAd is ready for showing 
+	// 
 	@Override
 	public void onReceiveDisplayAd(CaulySquareDisplayAd ad, boolean arg1) {
+		ad.show();
 	}
 }

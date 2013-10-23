@@ -5,45 +5,30 @@
     android:layout_height="fill_parent"
     android:background="#FFFFFF"
     android:orientation="vertical" >
-
     
-     <Spinner
+      <Spinner
          android:id="@+id/go_adv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         />
-    
-      <TextView
+  <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="60dp"
         android:textSize="20dp"
-        android:text="---- For Advertiser actions ----" />
-    
-
-
-    <LinearLayout
+        android:text="---- For DisplayAd Publisher ----" />
+	
+ <Button
+        android:id="@+id/show_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+         android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp" >
+        android:text="show Diplay" />
 
-        <Button
-            android:id="@+id/send_exec"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onExec"
-            android:text="Send Exec" />
 
-        <Button
-            android:id="@+id/send_action"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onAction"
-            android:text="Send Action" />
-    </LinearLayout>
 
 </LinearLayout>

@@ -6,14 +6,13 @@
     android:background="#FFFFFF"
     android:orientation="vertical" >
     
-     <Button
+     <Spinner
          android:id="@+id/go_adv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:textSize="20dp"
-        android:text="Go Advertiser Side Action" />
+       />
   <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,34 +34,6 @@
          android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
         android:text="show Adwall" />
- <Button
-        android:id="@+id/show_display"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-         android:layout_marginTop="10dp"
-        android:layout_gravity="center_horizontal"
-        android:text="show Diplay" />
- <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textSize="20dp"
-        android:text="---- For Custom Offerwall  ----" />
-    <Button
-        android:id="@+id/request_ad_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:text="request Adwall Data" />
-
-    <Button
-        android:id="@+id/show_ad_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:text="show Ad Detail" />
 
 
 </LinearLayout>
