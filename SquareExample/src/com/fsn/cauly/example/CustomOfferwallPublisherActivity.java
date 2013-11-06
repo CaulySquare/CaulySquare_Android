@@ -256,17 +256,24 @@ public class CustomOfferwallPublisherActivity extends Activity implements CaulyS
 	public void onReceiveDisplayAd(CaulySquareDisplayAd ad, boolean arg1) {
 	}
 	
+	// Custom Offerwall implementation 
 	void showCustomOfferwallDialog()
 	{
-		Dialog dialog = new Dialog(this,android.R.style.Theme_Translucent_NoTitleBar);
+		final Dialog dialog = new Dialog(this,android.R.style.Theme_Translucent_NoTitleBar);
 		dialog.setContentView(R.layout.custom_offerwall);
 		ListView listview =  (ListView) dialog.findViewById(R.id.list);
+		ImageView close =  (ImageView) dialog.findViewById(R.id.close);
 		listview.setDividerHeight(0);
 		listview.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int pos,long arg3) {
 				mCaulySquare.showOfferDetailDialog(CustomOfferwallPublisherActivity.this, mOfferList.get(pos));
+			}
+		});
+		close.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				dialog.dismiss();
 			}
 		});
 		ListAdapter adapter = new ListAdapter(); 

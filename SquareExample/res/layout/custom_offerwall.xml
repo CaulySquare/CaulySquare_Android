@@ -6,13 +6,29 @@
     android:background="@drawable/bg"
     android:orientation="vertical" >
 
-    
-<ImageView android:id="@+id/title" 
-    android:layout_width="fill_parent"
-    android:layout_height="70dp"
-    android:background="@drawable/top"
-    />
-<ListView android:id="@+id/list" 
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"></ListView>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="70dp" >
+
+        <ImageView
+            android:id="@+id/title"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/top" />
+         <ImageView
+            android:id="@+id/close"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@drawable/btn_x"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+    </ListView>
+
 </LinearLayout>
