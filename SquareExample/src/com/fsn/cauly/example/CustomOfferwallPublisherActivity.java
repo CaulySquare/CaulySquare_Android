@@ -3,18 +3,25 @@ package com.fsn.cauly.example;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.fsn.cauly.CaulyAdInfo;
 import com.fsn.cauly.CaulyAdInfoBuilder;
@@ -23,6 +30,7 @@ import com.fsn.cauly.CaulySquareAd;
 import com.fsn.cauly.CaulySquareDisplayAd;
 import com.fsn.cauly.CaulySquareDisplayAdListener;
 import com.fsn.cauly.CaulySquareListener;
+import com.fsn.cauly.cachemanager.ImageCacheManager;
 
 public class CustomOfferwallPublisherActivity extends Activity implements CaulySquareListener, OnClickListener, CaulySquareDisplayAdListener {
 
@@ -208,8 +216,10 @@ public class CustomOfferwallPublisherActivity extends Activity implements CaulyS
 		if(retCode > 0 )  // success
 		{
 			mOfferList = arg2;
-			if(mOfferList!=null && mOfferList.size()>0)
+			if(mOfferList!=null && mOfferList.size()>0){
 				show_offerdetail.setEnabled(true);
+				showCustomOfferwallDialog();
+			}
 		}
 		else			// failed
 		{
@@ -244,5 +254,98 @@ public class CustomOfferwallPublisherActivity extends Activity implements CaulyS
 	
 	@Override
 	public void onReceiveDisplayAd(CaulySquareDisplayAd ad, boolean arg1) {
+	}
+	
+	void showCustomOfferwallDialog()
+	{
+		Dialog dialog = new Dialog(this,android.R.style.Theme_Translucent_NoTitleBar);
+		dialog.setContentView(R.layout.custom_offerwall);
+		ListView listview =  (ListView) dialog.findViewById(R.id.list);
+		listview.setDividerHeight(0);
+		listview.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int pos,long arg3) {
+				mCaulySquare.showOfferDetailDialog(CustomOfferwallPublisherActivity.this, mOfferList.get(pos));
+			}
+		});
+		ListAdapter adapter = new ListAdapter(); 
+		adapter.setList(mOfferList);
+		listview.setAdapter(adapter);
+		dialog.show();
+	}
+	
+	class ListAdapter extends BaseAdapter 
+	{
+
+		ArrayList<CaulySquareAd> list;
+		public void setList(ArrayList<CaulySquareAd> list)
+		{
+			this.list = list;
+		}
+		public int getCount() {
+			return list.size();
+		}
+
+		public Object getItem(int position) {
+			return list.get(position);
+		}
+
+		public long getItemId(int position) {
+			return 0;
+		}
+
+		public View getView(int position, View convertView, ViewGroup parent) {
+			if(position <0 || position >=list.size())
+				return convertView;
+			if(convertView!=null && position==(Integer)convertView.getTag())
+				return convertView;
+			
+			CaulySquareAd info = list.get(position);
+		    View view = View.inflate(CustomOfferwallPublisherActivity.this, R.layout.custom_offerwall_item, null);
+		    View bg = view.findViewById(R.id.bg);
+		    
+		    TextView title = (TextView) view.findViewById(R.id.title);
+		    TextView detail = (TextView) view.findViewById(R.id.detail);
+		    TextView money = (TextView) view.findViewById(R.id.money);
+		    TextView type = (TextView) view.findViewById(R.id.type);
+		    ImageView  icon = (ImageView) view.findViewById(R.id.icon);
+		    ImageView  money_icon = (ImageView) view.findViewById(R.id.money_icon);
+		    title.setText(""+info.title);
+		    detail.setText(""+info.popover_desc);
+		    money.setText(""+info.reward);
+		    type.setText(getTypeString(info.action_type));
+		    ImageCacheManager.getInstance(CustomOfferwallPublisherActivity.this).setImageBitmap(info.img_url, icon);
+		    ImageCacheManager.getInstance(CustomOfferwallPublisherActivity.this).setImageBitmap(info.point_url, money_icon);
+	    	LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) bg.getLayoutParams();
+	    	lp.bottomMargin = PixelFromDP(CustomOfferwallPublisherActivity.this , 8);
+	    	bg.setLayoutParams(lp);
+	    	bg.setBackgroundResource(R.drawable.block02);
+		    view.setTag(Integer.valueOf(position));
+			return view;
+		}
+		
+	}
+	private String getTypeString(int type)
+	{
+		switch(type)
+		{
+		case 1:
+		case 2:
+			return "기본형";
+		case 3:
+			return "설치형";
+		case 4:
+			return "실행형";
+		case 5:
+			return "액션형";
+		}
+		return "기본형";
+	}
+	public  int PixelFromDP(Context context, float dip) {
+		if (context == null)
+			return 0;
+		
+		return (int)(dip * context.getResources().getDisplayMetrics().density);
 	}
 }
