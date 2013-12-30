@@ -3,54 +3,44 @@ package com.fsn.cauly.example;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PixelFormat;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.MediaController;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-import android.widget.VideoView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.fsn.cauly.CaulyAdInfo;
 import com.fsn.cauly.CaulyAdInfoBuilder;
 import com.fsn.cauly.CaulySquare;
 import com.fsn.cauly.CaulySquareAd;
-import com.fsn.cauly.CaulySquareDisplayAd;
-import com.fsn.cauly.CaulySquareDisplayAdListener;
 import com.fsn.cauly.CaulySquareListener;
+import com.fsn.cauly.CaulySquareToastAd;
+import com.fsn.cauly.CaulySquareToastAd.TOAST_DIRECTION;
+import com.fsn.cauly.CaulySquareToastAdListener;
 
-public class PublisherActivity extends Activity implements CaulySquareListener, OnClickListener, CaulySquareDisplayAdListener {
+public class ToastAdPublisherActivity extends Activity implements CaulySquareListener, OnClickListener, CaulySquareToastAdListener {
 
 	String APP_CODE="gatester";  // your app code which you are assigned.
-    Button show_offerwall,request_adwall_status;
+    Button show_toast_top, show_toast_bottom, dismiss_toast;
     CaulySquare mCaulySquare;
     ArrayList<CaulySquareAd> mOfferList;
-    
+    CaulySquareToastAd mToastAd;
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_publisher);
+        setContentView(R.layout.activity_publisher_toast);
         setSpinner();
-        request_adwall_status = (Button) findViewById(R.id.request_adwall_status);
-        show_offerwall = (Button) findViewById(R.id.show_adwall);
-        request_adwall_status.setOnClickListener(this);
-        show_offerwall.setOnClickListener(this);
-        show_offerwall.setEnabled(false);
+        show_toast_top = (Button) findViewById(R.id.show_toast_top);
+        show_toast_top.setOnClickListener(this);
+        show_toast_bottom = (Button) findViewById(R.id.show_toast_bottom);
+        show_toast_bottom.setOnClickListener(this);
+        dismiss_toast = (Button) findViewById(R.id.cancel_toast);
+        dismiss_toast.setOnClickListener(this);
+        
         /////////////////////////////////////////////////////////////////////
         // 카울리 스퀘어 초기화 
         initCaulySquare();
@@ -63,10 +53,13 @@ public class PublisherActivity extends Activity implements CaulySquareListener, 
 				@Override
 				public void onItemSelected(AdapterView<?> arg0, View arg1,	int pos, long arg3) {
 					
-					if(pos!=Util.CODE_PublisherActivity){
-						Util.goActivity(pos, PublisherActivity.this);
+					if(pos!=Util.CODE_ToastAdPublisherActivity)
+					{
+						Util.goActivity(pos, ToastAdPublisherActivity.this);
 						finish();
 					}
+						
+					
 				}
 
 				@Override
@@ -74,22 +67,30 @@ public class PublisherActivity extends Activity implements CaulySquareListener, 
 					// TODO Auto-generated method stub
 					
 				}
-			
-	 		});
+			});
 	         
 	         ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Util.items);
 	         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	         go_pub.setAdapter(aa);
+	         go_pub.setSelection(6);
 	    }
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.request_adwall_status: 
-			mCaulySquare.requestOfferStatus(this);  
+		case R.id.show_toast_top:
+			show_ToastAd(true);
 			break;
-		case R.id.show_adwall:					
-			showOfferWallScreen();
+		case R.id.show_toast_bottom:
+			show_ToastAd(false);
 			break;
+		case R.id.cancel_toast:
+//			if(mToastAd!=null)
+//			{
+//				mToastAd.cancel();
+//				mToastAd = null;
+//			}
+			break;
+			
 		}
 	}
 	
@@ -110,14 +111,20 @@ public class PublisherActivity extends Activity implements CaulySquareListener, 
 		mCaulySquare.setListener(this);
 	}
 	
-	
-	// show adwall page. it calls back "onOpenOfferwall","onCloseOfferwall"  on CaulySquareListener
-	void showOfferWallScreen()
-	{
-		mCaulySquare.showOfferwall(this, "Your own title");
+	// CaulySquareToastAd request 
+	// Before you call show() , You must call requestToastAd() first. 
+	// You see the result of requestToastAd at onReceiveToastAd and onFailedToReceiveToastAd 
+	//which is implemented on CaulySquareToastAdListener
+	private void show_ToastAd(boolean isTop) {
+		CaulyAdInfo adInfo = new CaulyAdInfoBuilder(APP_CODE).build();
+		CaulySquareToastAd toastAd = new CaulySquareToastAd();
+		toastAd.setAdInfo(adInfo);
+		toastAd.setToastAdListener(this);
+		if(isTop)
+			toastAd.requestToastAd(this,TOAST_DIRECTION.TOP);		
+		else
+			toastAd.requestToastAd(this,TOAST_DIRECTION.BOTTOM);		
 	}
-	
-	
 	
 	//////////////////////////////
 	// CaulySquareState Function  
@@ -154,58 +161,48 @@ public class PublisherActivity extends Activity implements CaulySquareListener, 
 	//////////////////////////////
 	
 	@Override
-	// This is called when Offer Detail Dialogue closed.
 	public void onCloseOfferDetails(int arg0, String arg1) {
 		
 	}
 
 	@Override
-	// This is called when offerWall closed.
 	public void onCloseOfferwall(int retCode, String retMsg) {
 		
 	}
-
 	@Override
 	public void onOfferListReceived(int retCode, String retMsg,	ArrayList<CaulySquareAd> arg2) {
 	}
 
 	@Override
-	// This is called when offer status received. 
-	// It tells us whether offerwall is available or not;
 	public void onOfferStatusReceived(int retCode, String retMsg) {
-		if(retCode > 0) // offers is available. 
-		{
-			show_offerwall.setEnabled(true);
-		}
-		else			// offers is not available at this moment for some reason. 
-		{
-			Toast.makeText(this, ""+retMsg, Toast.LENGTH_SHORT).show();
-		}
 	}
 
 	@Override
-	// This is called when Offer Detail Dialog shows.
 	public void onOpenOfferDetails() {
 		
 	}
 
 	@Override
-	// This is called when offerwall shows.
 	public void onOpenOfferwall() {
 		
 	}
 
 	@Override
-	public void onClosedDisplayAd(CaulySquareDisplayAd arg0) {
+	public void onClosedToastAd(CaulySquareToastAd arg0) {
 		
 	}
 
 	@Override
-	public void onFailedToReceiveDisplayAd(CaulySquareDisplayAd arg0, int arg1,	String arg2) {
+	public void onFailedToReceiveToastAd(CaulySquareToastAd arg0, int arg1,	String arg2) {
+		Toast.makeText(this, "onFailedToReceiveToastAd "+arg1+"  "+arg2, Toast.LENGTH_SHORT).show();
 	}
 
 	
+	// ToastAd is ready for showing 
+	// 
 	@Override
-	public void onReceiveDisplayAd(CaulySquareDisplayAd ad, boolean arg1) {
+	public void onReceiveToastAd(CaulySquareToastAd ad, boolean arg1) {
+		mToastAd = ad;
+		ad.show();
 	}
 }

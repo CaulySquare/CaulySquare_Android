@@ -13,6 +13,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.fsn.cauly.CaulyAdInfo;
 import com.fsn.cauly.CaulyAdInfoBuilder;
@@ -48,30 +49,11 @@ public class DisplayAdPublisherActivity extends Activity implements CaulySquareL
 
 				@Override
 				public void onItemSelected(AdapterView<?> arg0, View arg1,	int pos, long arg3) {
-					Intent i;
-	 				switch(pos)
-	 				{
-	 				case 0:
-	 					i = new Intent(DisplayAdPublisherActivity.this,PublisherActivity.class);
-	 					startActivity(i);
-	 					finish();
-	 					break;
-	 				case 1:
-	 					i = new Intent(DisplayAdPublisherActivity.this,CustomOfferwallPublisherActivity.class);
-	 					startActivity(i);
-	 					finish();
-	 					break;
-	 				case 3:
-	 					i = new Intent(DisplayAdPublisherActivity.this,AdvertiserActivity.class);
-	 					startActivity(i);
-	 					finish();
-	 					break;
-	 				case 4:
-						i = new Intent(DisplayAdPublisherActivity.this,BannerActivity.class);
-						startActivity(i);
+					
+					if(pos!=Util.CODE_DisplayAdPublisherActivity){
+						Util.goActivity(pos, DisplayAdPublisherActivity.this);
 						finish();
-						break;
-	 				}
+					}
 					
 				}
 
@@ -82,8 +64,7 @@ public class DisplayAdPublisherActivity extends Activity implements CaulySquareL
 				}
 			});
 	         
-	         String[] items = {"Go OfferWall Ad","Go Custom Offerwal Ad","Go DisplayAd","Go AdVertiser Report","Go Banner Ad"};
-	         ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, items);
+	         ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Util.items);
 	         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	         go_pub.setAdapter(aa);
 	         go_pub.setSelection(2);
@@ -194,7 +175,7 @@ public class DisplayAdPublisherActivity extends Activity implements CaulySquareL
 
 	@Override
 	public void onFailedToReceiveDisplayAd(CaulySquareDisplayAd arg0, int arg1,	String arg2) {
-		Log.i("CaulySample","onFailedToReceiveDisplayAd "+arg1+"  "+arg2 );
+		Toast.makeText(this, "onFailedToReceiveDisplayAd "+arg1+"  "+arg2, Toast.LENGTH_SHORT).show();
 	}
 
 	

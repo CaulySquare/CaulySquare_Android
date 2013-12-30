@@ -61,31 +61,12 @@ public class CustomOfferwallPublisherActivity extends Activity implements CaulyS
 
 				@Override
 				public void onItemSelected(AdapterView<?> arg0, View arg1,int pos, long arg3) {
-					Intent i;
-	 				switch(pos)
-	 				{
-	 				case 0:
-	 					i = new Intent(CustomOfferwallPublisherActivity.this,PublisherActivity.class);
-	 					startActivity(i);
-	 					finish();
-	 					break;
-	 				case 2:
-	 					i = new Intent(CustomOfferwallPublisherActivity.this,DisplayAdPublisherActivity.class);
-	 					startActivity(i);
-	 					finish();
-	 					break;
-	 				case 3:
-	 					i = new Intent(CustomOfferwallPublisherActivity.this,AdvertiserActivity.class);
-	 					startActivity(i);
-	 					finish();
-	 					break;
-	 				case 4:
-						i = new Intent(CustomOfferwallPublisherActivity.this,BannerActivity.class);
-						startActivity(i);
-						finish();
-						break;
-	 				}
 					
+					if(pos!=Util.CODE_CustomOfferwallPublisherActivity)
+					{
+						Util.goActivity(pos, CustomOfferwallPublisherActivity.this);
+						finish();
+					}
 				}
 
 				@Override
@@ -95,8 +76,7 @@ public class CustomOfferwallPublisherActivity extends Activity implements CaulyS
 				}
 			});
 	         
-	         String[] items = {"Go OfferWall Ad","Go Custom Offerwal Ad","Go DisplayAd","Go AdVertiser Report","Go Banner Ad"};
-	         ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, items);
+	         ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Util.items);
 	         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	         go_pub.setAdapter(aa);
 	         go_pub.setSelection(1);

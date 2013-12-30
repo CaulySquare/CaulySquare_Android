@@ -50,30 +50,13 @@ public class BannerActivity extends Activity implements CaulyAdViewListener {
 
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,int pos, long arg3) {
-				Intent i;
- 				switch(pos)
- 				{
- 				case 0:
- 					i = new Intent(BannerActivity.this,PublisherActivity.class);
- 					startActivity(i);
- 					finish();
- 					break;
- 				case 1:
- 					i = new Intent(BannerActivity.this,CustomOfferwallPublisherActivity.class);
- 					startActivity(i);
- 					finish();
- 					break;
- 				case 2:
- 					i = new Intent(BannerActivity.this,DisplayAdPublisherActivity.class);
- 					startActivity(i);
- 					finish();
- 					break;
- 				case 3:
- 					i = new Intent(BannerActivity.this,AdvertiserActivity.class);
- 					startActivity(i);
- 					finish();
- 					break;
- 				}
+				
+				if(pos!=Util.CODE_BannerActivity)
+				{
+					Util.goActivity(pos, BannerActivity.this);
+					finish();
+				}
+					
 				
 			}
 
@@ -84,8 +67,7 @@ public class BannerActivity extends Activity implements CaulyAdViewListener {
 			}
 		});
          
-         String[] items = {"Go OfferWall Ad","Go Custom Offerwal Ad","Go DisplayAd","Go AdVertiser Report","Go Banner Ad"};
-         ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, items);
+         ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Util.items);
          aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
          go_pub.setAdapter(aa);
          go_pub.setSelection(4);
