@@ -42,6 +42,14 @@
             android:name=".DisplayAdPublisherActivity"  android:theme="@android:style/Theme.NoTitleBar" 
             android:configChanges="keyboard|keyboardHidden|orientation" >	
         </activity>
+         <activity
+            android:name=".ToastAdPublisherActivity"  android:theme="@android:style/Theme.NoTitleBar" 
+            android:configChanges="keyboard|keyboardHidden|orientation" >	
+        </activity>
+         <activity
+            android:name=".CloseAdPublisherActivity"  android:theme="@android:style/Theme.NoTitleBar" 
+            android:configChanges="keyboard|keyboardHidden|orientation" >	
+        </activity>
     </application>
 
 </manifest>
