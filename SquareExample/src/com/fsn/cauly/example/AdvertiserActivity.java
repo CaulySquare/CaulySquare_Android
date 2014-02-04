@@ -1,5 +1,6 @@
 package com.fsn.cauly.example;
 
+import java.io.UTFDataFormatException;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -21,7 +22,7 @@ import com.fsn.cauly.CaulySquareListener;
 
 public class AdvertiserActivity extends Activity implements  CaulySquareListener {
 
-	String APP_CODE="gatester";  // your app code which you are assigned.
+	String APP_CODE=Util.APPCODE;//"gatester";  // your app code which you are assigned.
     Button actioncompleted, execcompleted, showOfferwall;
     CaulySquare mCaulySquare;
     
@@ -153,6 +154,12 @@ public class AdvertiserActivity extends Activity implements  CaulySquareListener
 
 	@Override
 	public void onOpenOfferwall() {
+		
+	}
+
+	@Override
+	public void onIsNewOfferwall(boolean arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 	

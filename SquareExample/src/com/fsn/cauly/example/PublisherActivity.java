@@ -36,8 +36,8 @@ import com.fsn.cauly.CaulySquareListener;
 
 public class PublisherActivity extends Activity implements CaulySquareListener, OnClickListener, CaulySquareDisplayAdListener {
 
-	String APP_CODE="gatester";  // your app code which you are assigned.
-    Button show_offerwall,request_adwall_status;
+	String APP_CODE=Util.APPCODE;//"gatester";  // your app code which you are assigned.
+    Button show_offerwall,request_adwall_status, requestIsNewAdwall;
     CaulySquare mCaulySquare;
     ArrayList<CaulySquareAd> mOfferList;
     
@@ -48,6 +48,8 @@ public class PublisherActivity extends Activity implements CaulySquareListener, 
         setSpinner();
         request_adwall_status = (Button) findViewById(R.id.request_adwall_status);
         show_offerwall = (Button) findViewById(R.id.show_adwall);
+        requestIsNewAdwall = (Button) findViewById(R.id.request_isnew_adwall);
+        requestIsNewAdwall.setOnClickListener(this);
         request_adwall_status.setOnClickListener(this);
         show_offerwall.setOnClickListener(this);
         show_offerwall.setEnabled(false);
@@ -90,6 +92,10 @@ public class PublisherActivity extends Activity implements CaulySquareListener, 
 		case R.id.show_adwall:					
 			showOfferWallScreen();
 			break;
+		case R.id.request_isnew_adwall:					
+			requestIsNewOfferWallCheck();
+			break;
+			
 		}
 	}
 	
@@ -117,6 +123,12 @@ public class PublisherActivity extends Activity implements CaulySquareListener, 
 		mCaulySquare.showOfferwall(this, "Your own title");
 	}
 	
+	
+	// show adwall page. it calls back "onOpenOfferwall","onCloseOfferwall"  on CaulySquareListener
+	void requestIsNewOfferWallCheck()
+	{
+		mCaulySquare.requestIsNewOfferWall(this);
+	}
 	
 	
 	//////////////////////////////
@@ -207,5 +219,12 @@ public class PublisherActivity extends Activity implements CaulySquareListener, 
 	
 	@Override
 	public void onReceiveDisplayAd(CaulySquareDisplayAd ad, boolean arg1) {
+	}
+	@Override
+	public void onIsNewOfferwall(boolean isNew) {
+		if(isNew)
+			Toast.makeText(this, "새로운 광고가 있습니다.", Toast.LENGTH_SHORT).show();
+		else
+			Toast.makeText(this, "기존의 광고 입니다.", Toast.LENGTH_SHORT).show();
 	}
 }

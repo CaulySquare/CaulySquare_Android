@@ -34,7 +34,7 @@ import com.fsn.cauly.cachemanager.ImageCacheManager;
 
 public class CustomOfferwallPublisherActivity extends Activity implements CaulySquareListener, OnClickListener, CaulySquareDisplayAdListener {
 
-	String APP_CODE="gatester";  // your app code which you are assigned.
+	String APP_CODE=Util.APPCODE;//"gatester";  // your app code which you are assigned.
     Button  request_offerlist, show_offerdetail;
     CaulySquare mCaulySquare;
     ArrayList<CaulySquareAd> mOfferList;
@@ -334,5 +334,10 @@ public class CustomOfferwallPublisherActivity extends Activity implements CaulyS
 			return 0;
 		
 		return (int)(dip * context.getResources().getDisplayMetrics().density);
+	}
+	@Override
+	public void onIsNewOfferwall(boolean arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

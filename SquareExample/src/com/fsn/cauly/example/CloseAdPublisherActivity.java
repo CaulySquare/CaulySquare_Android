@@ -23,7 +23,7 @@ import com.fsn.cauly.CaulySquareListener;
 
 public class CloseAdPublisherActivity extends Activity implements CaulySquareListener, OnClickListener, CaulySquareCloseAdListener {
 
-	String APP_CODE="gatester";  // your app code which you are assigned.
+	String APP_CODE= Util.APPCODE;//"gatester";  // your app code which you are assigned.
     Button show_close, request_close;
     CaulySquare mCaulySquare;
     ArrayList<CaulySquareAd> mOfferList;
@@ -191,5 +191,10 @@ public class CloseAdPublisherActivity extends Activity implements CaulySquareLis
 	@Override
 	public void onReceiveCloseAd(CaulySquareCloseAd ad, boolean arg1) {
 		show_close.setEnabled(true);
+	}
+	@Override
+	public void onIsNewOfferwall(boolean arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -11,7 +11,7 @@ public class Util {
 	public static final int CODE_BannerActivity = 4;
 	public static final int CODE_CloseAdPublisherActivity = 5;
 	public static final int CODE_ToastAdPublisherActivity = 6;
-	
+	public static String APPCODE =  "adtest1";
 	public static  String[] items = {"Go OfferWall Ad","Go Custom Offerwal Ad","Go DisplayAd","Go AdVertiser Report","Go Banner Ad","Go Close Ad","Go Toast Ad"};
 	public static void goActivity(int pos, Context context) {
 		Intent i;

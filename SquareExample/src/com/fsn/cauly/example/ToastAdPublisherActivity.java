@@ -24,7 +24,7 @@ import com.fsn.cauly.CaulySquareToastAdListener;
 
 public class ToastAdPublisherActivity extends Activity implements CaulySquareListener, OnClickListener, CaulySquareToastAdListener {
 
-	String APP_CODE="gatester";  // your app code which you are assigned.
+	String APP_CODE=Util.APPCODE;//"gatester";  // your app code which you are assigned.
     Button show_toast_top, show_toast_bottom, dismiss_toast;
     CaulySquare mCaulySquare;
     ArrayList<CaulySquareAd> mOfferList;
@@ -204,5 +204,10 @@ public class ToastAdPublisherActivity extends Activity implements CaulySquareLis
 	public void onReceiveToastAd(CaulySquareToastAd ad, boolean arg1) {
 		mToastAd = ad;
 		ad.show();
+	}
+	@Override
+	public void onIsNewOfferwall(boolean arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

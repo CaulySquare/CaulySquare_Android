@@ -27,6 +27,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="request Adwall Status" />
+	
+	 <Button
+        android:id="@+id/request_isnew_adwall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:text="request IsNew Adwall " />
+	
     <Button
         android:id="@+id/show_adwall"
         android:layout_width="wrap_content"

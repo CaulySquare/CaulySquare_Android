@@ -25,7 +25,7 @@ import com.fsn.cauly.CaulySquareListener;
 
 public class DisplayAdPublisherActivity extends Activity implements CaulySquareListener, OnClickListener, CaulySquareDisplayAdListener {
 
-	String APP_CODE="gatester";  // your app code which you are assigned.
+	String APP_CODE=Util.APPCODE;//"gatester";  // your app code which you are assigned.
     Button show_display;
     CaulySquare mCaulySquare;
     ArrayList<CaulySquareAd> mOfferList;
@@ -184,5 +184,10 @@ public class DisplayAdPublisherActivity extends Activity implements CaulySquareL
 	@Override
 	public void onReceiveDisplayAd(CaulySquareDisplayAd ad, boolean arg1) {
 		ad.show();
+	}
+	@Override
+	public void onIsNewOfferwall(boolean arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }
